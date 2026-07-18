@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ring the bell at a cartoon house and meet its extremely shy resident."
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'none'; connect-src 'none'; font-src 'self'; form-action 'none'; frame-src 'none'; img-src 'self' data:; media-src 'none'; object-src 'none'; script-src 'self'; style-src 'self'; worker-src 'none'"
+    />
+    <meta name="theme-color" content="#172a46" />
+    <meta property="og:title" content="ShyDoorbell" />
+    <meta
+      property="og:description"
+      content="Ring the bell at a cartoon house and meet its extremely shy resident."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <title>ShyDoorbell</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#doorbell-button">Skip to the doorbell</a>
+
+    <main class="app-shell">
+      <header class="site-header">
+        <div class="title-lockup">
+          <p class="eyebrow">17½ Whisper Lane</p>
+          <h1>Shy<span>Doorbell</span></h1>
+          <p class="intro">Someone is home. They would strongly prefer you did not know that.</p>
+        </div>
+
+        <div class="attempt-card" aria-label="Doorbell attempt count">
+          <span class="attempt-card__label">Doorbell tries</span>
+          <output id="attempt-count" class="attempt-card__number">0</output>
+          <span id="rare-status" class="attempt-card__note">Mystery locked</span>
+        </div>
+      </header>
+
+      <section class="scene-card" aria-labelledby="scene-heading">
+        <h2 id="scene-heading" class="visually-hidden">Interactive house entrance</h2>
+
+        <div class="scene-toolbar">
+          <div class="status-display">
+            <span class="status-display__dot" aria-hidden="true"></span>
+            <p id="scene-status" role="status" aria-live="polite">The house is suspiciously quiet.</p>
+          </div>
+
+          <div class="scene-controls" aria-label="Scene controls">
+            <button id="sound-toggle" class="control-button" type="button" aria-pressed="true">
+              <span class="control-button__icon" aria-hidden="true">♪</span>
+              <span id="sound-label">Sound on</span>
+            </button>
+            <button id="reset-button" class="control-button" type="button">
+              <span class="control-button__icon" aria-hidden="true">↺</span>
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <div id="house-stage" class="house-stage">
+          <svg
+            class="house-scene"
+            viewBox="0 0 1000 680"
+            role="img"
+            aria-labelledby="house-title house-description"
+          >
+            <title id="house-title">A cartoon house entrance at dusk</title>
+            <desc id="house-description">
+              A teal front door, lit porch, window, doorbell, and a shy resident hiding inside.
+            </desc>
+
+            <defs>
+              <linearGradient id="sky-gradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#172a46" />
+                <stop offset="1" stop-color="#536b86" />
+              </linearGradient>
+              <linearGradient id="wall-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f1cf91" />
+                <stop offset="1" stop-color="#dba96c" />
+              </linearGradient>
+              <linearGradient id="door-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#287b78" />
+                <stop offset="1" stop-color="#165956" />
+              </linearGradient>
+              <radialGradient id="lamp-glow">
+                <stop offset="0" stop-color="#ffd56a" stop-opacity="0.84" />
+                <stop offset="0.45" stop-color="#ffd56a" stop-opacity="0.3" />
+                <stop offset="1" stop-color="#ffd56a" stop-opacity="0" />
+              </radialGradient>
+              <filter id="soft-shadow" x="-30%" y="-30%" width="160%" height="180%">
+                <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#101c30" flood-opacity="0.3" />
+              </filter>
+              <filter id="paper-shadow" x="-30%" y="-30%" width="160%" height="180%">
+                <feDropShadow dx="3" dy="5" stdDeviation="2" flood-color="#342a25" flood-opacity="0.3" />
+              </filter>
+              <clipPath id="window-clip">
+                <rect x="107" y="185" width="217" height="178" rx="4" />
+              </clipPath>
+              <clipPath id="doorway-clip">
+                <rect x="392" y="143" width="268" height="480" rx="5" />
+              </clipPath>
+            </defs>
+
+            <rect class="sky" width="1000" height="680" fill="url(#sky-gradient)" />
+
+            <g class="stars" aria-hidden="true">
+              <circle cx="92" cy="74" r="2.5" />
+              <circle cx="180" cy="42" r="1.8" />
+              <circle cx="814" cy="65" r="2.2" />
+              <circle cx="903" cy="113" r="1.7" />
+              <path d="M735 58l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" />
+            </g>
+
+            <path class="roof-shadow" d="M18 137L112 62h776l94 75v37H18z" />
+            <rect x="40" y="125" width="920" height="493" rx="8" fill="url(#wall-gradient)" />
+
+            <g class="siding" aria-hidden="true">
+              <path d="M40 199h920M40 273h920M40 347h920M40 421h920M40 495h920M40 569h920" />
+              <path class="siding-highlight" d="M40 195h920M40 269h920M40 343h920M40 417h920M40 491h920M40 565h920" />
+            </g>
+
+            <g class="window" filter="url(#soft-shadow)">
+              <rect x="91" y="168" width="249" height="213" rx="7" class="window__frame" />
+              <rect x="107" y="185" width="217" height="178" rx="4" class="window__glass" />
+
+              <g clip-path="url(#window-clip)">
+                <g class="window-character character">
+                  <ellipse cx="217" cy="333" rx="64" ry="75" class="character__shirt" />
+                  <ellipse cx="217" cy="271" rx="53" ry="58" class="character__face" />
+                  <path d="M166 269c0-47 23-73 54-73 33 0 59 29 53 76-9-23-30-35-61-27-17 4-28 16-46 24z" class="character__hair" />
+                  <circle cx="199" cy="274" r="6" class="character__eye" />
+                  <circle cx="238" cy="274" r="6" class="character__eye" />
+                  <path d="M208 301q10-8 20 0" class="character__mouth" />
+                </g>
+                <path class="curtain curtain--left" d="M107 185h70c-4 36-18 67-10 105 6 29 1 52-20 73h-40z" />
+                <path class="curtain curtain--right" d="M324 185h-70c4 36 18 67 10 105-6 29-1 52 20 73h40z" />
+              </g>
+
+              <path d="M216 185v178M107 274h217" class="window__cross" />
+              <path d="M80 382h271l-16 20H94z" class="window__sill" />
+            </g>
+
+            <g class="porch-lamp" aria-hidden="true">
+              <circle cx="767" cy="193" r="104" fill="url(#lamp-glow)" class="porch-lamp__glow" />
+              <path d="M744 138h46l10 22h-66z" class="porch-lamp__cap" />
+              <path d="M741 159h52l-5 57h-42z" class="porch-lamp__glass" />
+              <path d="M746 216h42l10 12h-62z" class="porch-lamp__cap" />
+              <path d="M767 138v-18h38" class="porch-lamp__arm" />
+              <circle cx="767" cy="188" r="11" class="porch-lamp__bulb" />
+            </g>
+
+            <g class="door-frame" filter="url(#soft-shadow)">
+              <path d="M369 630V119h314v511h-23V143H392v487z" />
+              <path d="M352 143l18-24h313l18 24z" class="door-frame__top" />
+            </g>
+
+            <rect x="392" y="143" width="268" height="480" rx="5" class="doorway" />
+
+            <g clip-path="url(#doorway-clip)">
+              <g class="door-character character">
+                <ellipse cx="628" cy="472" rx="65" ry="91" class="character__shirt" />
+                <circle cx="625" cy="366" r="59" class="character__face" />
+                <path d="M570 366c-2-48 21-77 55-77 37 0 65 35 58 82-11-25-36-38-69-28-16 5-27 15-44 23z" class="character__hair" />
+                <g class="character__eyes">
+                  <ellipse cx="607" cy="371" rx="6.5" ry="8" class="character__eye" />
+                  <ellipse cx="646" cy="371" rx="6.5" ry="8" class="character__eye" />
+                </g>
+                <path d="M615 400q11-8 22 0" class="character__mouth" />
+                <path d="M675 344q17 5 12 23" class="character__surprise-mark" />
+              </g>
+
+              <g class="single-eye">
+                <ellipse cx="648" cy="361" rx="29" ry="20" class="single-eye__white" />
+                <circle cx="648" cy="361" r="10" class="single-eye__iris" />
+                <circle cx="652" cy="357" r="3" class="single-eye__shine" />
+              </g>
+
+              <g class="door-hand">
+                <path d="M646 416c30-4 51 6 69 29l-17 17c-15-13-27-15-45-10z" class="hand__arm" />
+                <path d="M708 440c13 2 23 10 21 19-3 11-20 16-34 5-8-6-1-26 13-24z" class="hand__skin" />
+                <path d="M714 443q8-13 15-4M720 449q10-8 14-1" class="hand__fingers" />
+              </g>
+
+              <g class="rare-character character" filter="url(#soft-shadow)">
+                <ellipse cx="526" cy="540" rx="66" ry="91" class="character__shirt" />
+                <circle cx="526" cy="410" r="61" class="character__face" />
+                <path d="M469 410c-2-51 22-80 57-80 38 0 67 36 60 84-11-26-38-39-72-29-17 5-29 16-45 25z" class="character__hair" />
+                <circle cx="506" cy="415" r="7" class="character__eye" />
+                <circle cx="547" cy="415" r="7" class="character__eye" />
+                <path d="M514 446q12 10 25 0" class="character__smile" />
+                <path d="M461 492q-42 17-52 54M591 492q43 12 57 49" class="character__arms" />
+                <path d="M397 540q14-20 29 1-10 23-29-1zM637 536q14-20 29 1-10 23-29-1z" class="character__hand" />
+              </g>
+            </g>
+
+            <g class="door-panel">
+              <rect x="392" y="143" width="268" height="480" rx="4" fill="url(#door-gradient)" />
+              <rect x="414" y="165" width="224" height="108" rx="4" class="door-panel__inset" />
+              <rect x="414" y="293" width="224" height="132" rx="4" class="door-panel__inset" />
+              <rect x="414" y="445" width="224" height="151" rx="4" class="door-panel__inset" />
+              <circle cx="526" cy="219" r="24" class="door-panel__window-frame" />
+              <circle cx="526" cy="219" r="15" class="door-panel__window" />
+              <circle cx="619" cy="375" r="12" class="door-panel__knob-base" />
+              <circle cx="616" cy="372" r="8" class="door-panel__knob" />
+
+              <g class="not-home-sign" filter="url(#paper-shadow)">
+                <path d="M475 287l16-33M578 287l-14-33" class="not-home-sign__string" />
+                <path d="M465 283q61-8 124 2l-3 75q-60 7-119-1z" class="not-home-sign__paper" />
+                <text x="527" y="310" text-anchor="middle" class="not-home-sign__small">DEFINITELY</text>
+                <text x="527" y="337" text-anchor="middle" class="not-home-sign__big">NOT HOME</text>
+                <path d="M478 348q48 5 96-1" class="not-home-sign__underline" />
+              </g>
+            </g>
+
+            <g class="cardboard-assistant" filter="url(#paper-shadow)">
+              <path d="M704 405h126l15 171H690z" class="cardboard-assistant__body" />
+              <path d="M710 405l23-40h74l22 40z" class="cardboard-assistant__head" />
+              <circle cx="750" cy="392" r="7" class="cardboard-assistant__eye" />
+              <circle cx="793" cy="392" r="7" class="cardboard-assistant__eye" />
+              <path d="M750 426h43M771 428v25" class="cardboard-assistant__face" />
+              <path d="M715 473q57-12 111 0l-3 58H710z" class="cardboard-assistant__note" />
+              <text x="768" y="495" text-anchor="middle">HELLO.</text>
+              <text x="768" y="515" text-anchor="middle">I'M THE</text>
+              <text x="768" y="535" text-anchor="middle">ASSISTANT.</text>
+              <path d="M719 574l-17 43M817 574l17 43" class="cardboard-assistant__legs" />
+            </g>
+
+            <g class="porch-floor">
+              <path d="M223 618h619l97 62H91z" />
+              <path d="M264 618h528M198 645h646" class="porch-floor__boards" />
+            </g>
+
+            <g class="plants" aria-hidden="true">
+              <path d="M73 624q-28-61 15-79-6 42 16 72-5-73 43-84 2 47-25 88 28-48 70-33-21 43-72 49z" />
+              <path d="M850 626q-21-50 18-75-4 36 15 66 0-67 43-73-1 43-22 76 25-38 57-20-18 34-60 42z" />
+            </g>
+
+            <g class="welcome-mat" transform="rotate(-1 526 625)">
+              <path d="M412 596h227l26 52H387z" />
+              <text x="526" y="630" text-anchor="middle">PLEASE KNOCK SOFTLY</text>
+            </g>
+          </svg>
+
+          <div id="reaction-bubble" class="reaction-bubble" aria-hidden="true">Oh no. Eye contact.</div>
+
+          <button
+            id="doorbell-button"
+            class="doorbell-button"
+            type="button"
+            aria-describedby="doorbell-help"
+          >
+            <span class="doorbell-button__plate" aria-hidden="true">
+              <span class="doorbell-button__bell">●</span>
+            </span>
+            <span class="visually-hidden">Ring the doorbell</span>
+          </button>
+        </div>
+
+        <p id="doorbell-help" class="doorbell-help">
+          <span aria-hidden="true">↗</span> Press the glowing button. Curiosity is not a crime.
+        </p>
+      </section>
+
+      <footer class="site-footer">
+        <p>Built from HTML, CSS, SVG, and a very small amount of courage.</p>
+        <p>Tip: the resident gets less predictable after ten rings.</p>
+      </footer>
+    </main>
+  </body>
+</html>
