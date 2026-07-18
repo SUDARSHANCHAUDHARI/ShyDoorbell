@@ -1,34 +1,99 @@
 # ShyDoorbell
 
-ShyDoorbell is a standalone interactive cartoon about a resident who would rather not answer the door. Ring the bell, watch the resident panic, and discover a collection of increasingly elaborate avoidance tactics.
+ShyDoorbell is a standalone interactive cartoon about a resident who would rather not answer the door. Ring the bell, watch the resident panic, and discover an increasingly elaborate collection of avoidance tactics.
 
-Everything is drawn and generated in the browser with HTML, CSS, inline SVG, and vanilla JavaScript. There are no external images, audio files, fonts, frameworks, build tools, analytics, or backend services.
+The complete experience runs in the browser using semantic HTML, CSS, inline SVG, and vanilla JavaScript. It has no external images, audio files, fonts, frameworks, runtime dependencies, analytics, build system, or backend service.
+
+## Project status
+
+- **Application:** Production-ready
+- **Repository:** Private
+- **Default branch:** `main`
+- **Deployment:** GitHub Pages compatible but intentionally not enabled
+- **Build step:** None
+- **Primary quality gate:** `node scripts/verify.mjs`
+
+Publishing the repository or enabling GitHub Pages is a separate release decision.
+
+## Experience
+
+Pressing the doorbell starts a complete animated visit:
+
+1. A generated doorbell chime plays.
+2. The porch light turns on.
+3. The door opens slightly.
+4. The shy resident peeks outside.
+5. The resident notices the visitor.
+6. The door closes quickly.
+7. One randomized avoidance reaction follows.
+
+The normal reaction pool contains:
+
+- Looking through the window
+- Showing only one eye
+- Hanging a “Not Home” sign
+- Turning off the porch light
+- Pressing the doorbell back
+- Opening and immediately closing the door
+- Sending out a cardboard assistant
+- Showing only a hand
+
+The tenth attempt guarantees a secret full greeting. Later attempts retain a small chance of showing that rare reaction again, and normal reactions do not repeat consecutively.
 
 ## Features
 
-- A responsive, hand-drawn house entrance with a door, window, porch light, doorbell, and hidden resident
-- A complete doorbell sequence: chime, porch light, opening door, peeking resident, eye contact, and rapid retreat
-- Eight randomized reactions:
-  - Looking through the window
-  - Showing only one eye
-  - Hanging a “Not Home” sign
-  - Turning off the porch light
-  - Pressing the doorbell back
-  - Opening and immediately closing the door
-  - Sending out a cardboard assistant
-  - Showing only a hand
-- A guaranteed secret reaction on the tenth attempt, with a small chance of repeats afterward
-- Persistent attempt and sound preferences using local storage
+- Responsive, original SVG house illustration with a door, window, porch light, doorbell, and hidden character
+- Smooth CSS and SVG state transitions with a reduced-motion alternative
 - Generated doorbell, gasp, switch, slam, ring-back, and secret-reaction sounds using the Web Audio API
-- Sound toggle and attempt reset controls
-- Keyboard-accessible native controls, live status announcements, visible focus states, and a skip link
-- Reduced-motion and increased-contrast support
+- Sound toggle that immediately stops active generated audio
+- Persistent attempt count and sound preference using browser local storage
+- Reset control that cancels the current sequence and clears attempt history
+- Native keyboard-accessible buttons and a skip link
+- Live status announcements and descriptive SVG text for assistive technology
+- Visible keyboard focus and increased-contrast support
+- Restrictive Content Security Policy with no runtime network access
+- Relative asset paths and `.nojekyll` support for project-site GitHub Pages hosting
+
+## Technology
+
+| Area | Implementation |
+| --- | --- |
+| Structure | Semantic HTML5 |
+| Illustration | Original inline SVG and local SVG favicon |
+| Presentation | CSS custom properties, responsive layout, transitions, and media queries |
+| Interaction | Vanilla JavaScript |
+| Audio | Generated Web Audio oscillators and noise buffers |
+| Persistence | Web Storage API (`localStorage`) |
+| Hosting | Static files served from the repository root |
+| Verification | Dependency-free Node.js contract and interaction harness |
+
+## Requirements
+
+### Runtime
+
+- A current evergreen browser
+- JavaScript enabled
+- Web Audio support for sound effects; the visual experience remains functional without it
+
+### Development and verification
+
+- A current Node.js release for `scripts/verify.mjs`
+- Any static file server for local HTTP testing
+
+No package manager or dependency installation is required.
 
 ## Run locally
 
-No installation or build step is required.
+Clone the repository and enter the project directory:
 
-Open `index.html` directly, or serve the folder with any static file server. For example:
+```sh
+git clone https://github.com/SUDARSHANCHAUDHARI/ShyDoorbell.git
+cd ShyDoorbell
+```
+
+Because the repository is private, cloning requires access through an authenticated GitHub account.
+
+You can open `index.html` directly or serve the directory locally:
 
 ```sh
 python3 -m http.server 8000
@@ -36,62 +101,110 @@ python3 -m http.server 8000
 
 Then visit `http://localhost:8000`.
 
-Audio begins only after a button press, as required by modern browsers. If local storage is unavailable, the interaction still works; only persistence across reloads is disabled.
+Modern browsers allow audio only after user interaction, so generated sounds begin after the first control press. When local storage is blocked or unavailable, the interaction still works but preferences and attempts do not persist across reloads.
+
+## Controls
+
+- Activate the red doorbell with a pointer, <kbd>Enter</kbd>, or <kbd>Space</kbd> to start a visit.
+- Use **Sound on/off** to control all generated sound effects.
+- Use **Reset** to cancel the current interaction, return the attempt counter to zero, and lock the secret reaction again.
 
 ## Verify
 
-Run the dependency-free production quality gate with a current Node.js release:
+Run the complete dependency-free production gate:
 
 ```sh
 node scripts/verify.mjs
 ```
 
-It checks JavaScript execution, local resource links, Content Security Policy, ignore coverage, accessibility contracts, responsive and reduced-motion rules, every reaction branch, the tenth-ring unlock, sound controls, Reset, and stale scene cleanup.
+The verification command checks:
 
-Visual polish still requires a brief manual review in a current browser because this repository intentionally does not use browser automation or session capture.
+- Required production and repository files
+- JavaScript execution and scene cleanup
+- Every normal reaction and the secret reaction branch
+- The complete ten-ring flow and guaranteed unlock
+- Sound toggle and Reset behavior
+- Duplicate HTML and SVG identifiers
+- Local resource integrity and absence of remote runtime URLs
+- Content Security Policy and referrer policy
+- Unsafe DOM-injection primitives
+- Responsive and reduced-motion contracts
+- `.gitignore` coverage for secrets, keys, dependencies, and generated output
 
-## Deploy to GitHub Pages
+Visual polish still requires a brief manual review in current phone and desktop browsers. Browser automation, screenshots, recordings, and traces are intentionally not part of this repository's verification process.
 
-1. Push these files to a GitHub repository.
-2. Open the repository's **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Select the branch containing the project and the `/ (root)` folder, then save.
+## Accessibility
 
-No path changes are needed because all project links are relative. No GitHub Actions workflow is required.
+ShyDoorbell uses native buttons for all controls, provides a skip link and visible focus indicators, announces scene changes through an ARIA live region, and labels the main SVG illustration with a title and description. The design also supports:
 
-The repository can remain private during final review. Publishing the repository or enabling GitHub Pages is a separate release action.
+- `prefers-reduced-motion`
+- `prefers-contrast: more`
+- Responsive layouts down to narrow mobile viewports
+- Keyboard operation without pointer-only actions
+
+## Privacy and security
+
+ShyDoorbell does not collect, transmit, or process personal information. It contains no analytics, advertising, cookies, accounts, forms, remote APIs, or backend connections.
+
+The browser stores only two local values:
+
+- `shyDoorbell.attempts` — the number of doorbell attempts
+- `shyDoorbell.sound` — the sound preference
+
+Reset removes the stored attempt count. Browser settings can clear both values at any time.
+
+The page includes a restrictive Content Security Policy that blocks network connections, plugins, frames, workers, media downloads, form submission, and inline or third-party scripts. All runtime resources are local to the repository.
 
 ## Project structure
 
 ```text
 ShyDoorbell/
-├── .nojekyll      # Serve the static files directly on GitHub Pages
-├── AGENTS.md      # Repository constraints and verification instructions
-├── favicon.svg    # Original local SVG favicon
-├── index.html     # Semantic UI and original SVG illustration
-├── style.css      # Layout, scene states, animation, and accessibility preferences
-├── script.js      # Sequence controller, reactions, persistence, and audio synthesis
-├── scripts/
-│   └── verify.mjs # Dependency-free production quality gate
-├── README.md      # Project and deployment guide
-└── .gitignore     # Local/editor exclusions
+├── .gitignore      # Local, secret, dependency, and generated-file exclusions
+├── .nojekyll       # Direct static-file handling on GitHub Pages
+├── AGENTS.md       # Repository constraints and verification instructions
+├── README.md       # Project documentation
+├── favicon.svg     # Original local SVG favicon
+├── index.html      # Semantic interface and original SVG illustration
+├── script.js       # Sequence controller, reactions, persistence, and audio synthesis
+├── style.css       # Layout, scene states, animation, and accessibility preferences
+└── scripts/
+    └── verify.mjs  # Dependency-free production quality gate
 ```
 
-## Controls
+## Deploy to GitHub Pages
 
-- Press or keyboard-activate the red doorbell to start a visit.
-- Use **Sound on/off** to toggle all generated effects.
-- Use **Reset** to return the attempt counter and secret unlock to zero.
+The project is ready to deploy directly from the repository root. No compiled output or workflow is required.
 
-## Browser support
+1. Complete a manual visual review.
+2. Confirm the intended repository and site visibility.
+3. Open the repository's **Settings → Pages**.
+4. Under **Build and deployment**, choose **Deploy from a branch**.
+5. Select `main` and the `/ (root)` folder, then save.
+6. Verify keyboard controls, audio, storage, and phone/desktop layouts on the published URL.
 
-ShyDoorbell targets current evergreen browsers. The visual experience works without Web Audio support; in that case the scene simply remains silent.
+All asset paths are relative, so the site works from a GitHub project-page subdirectory. GitHub Pages is currently disabled, and no GitHub Actions workflow is configured.
 
 ## Release checklist
 
-1. Run `node scripts/verify.mjs`.
-2. Manually review keyboard controls, sound, motion preferences, and phone/desktop layouts in current browsers.
-3. Confirm the GitHub repository visibility is appropriate for release.
-4. Enable GitHub Pages from the repository root only when the site is ready to publish.
+1. Confirm `git status` is clean and `main` matches `origin/main`.
+2. Run `node scripts/verify.mjs`.
+3. Run the secret and high-risk-file checks required by repository policy.
+4. Manually review keyboard controls, sound, motion preferences, contrast, and responsive layouts.
+5. Confirm repository visibility before publishing.
+6. Enable GitHub Pages only after release approval.
 
-CI is intentionally not configured. Repository policy requires explicit approval before adding GitHub Actions; until then, the local verification command is the release gate.
+## Author
+
+**Sudarshan Chaudhari**
+
+Independent developer at **SudarshanTechLabs**
+
+- GitHub: [@SUDARSHANCHAUDHARI](https://github.com/SUDARSHANCHAUDHARI)
+- Email: [sunny.sudarshan@gmail.com](mailto:sunny.sudarshan@gmail.com)
+- Location: Bangkok, Thailand
+
+## License and ownership
+
+Copyright © 2026 Sudarshan Chaudhari / SudarshanTechLabs. All rights reserved.
+
+This repository does not currently include an open-source license. Source availability does not grant permission to copy, modify, distribute, or reuse the project unless the author provides written permission or adds a license later.
