@@ -160,7 +160,7 @@ h1 span {
 }
 
 .attempt-card__note.is-unlocked {
-  color: var(--teal);
+  color: var(--teal-dark);
 }
 
 .scene-card {
