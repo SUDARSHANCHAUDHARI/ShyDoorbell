@@ -37,6 +37,7 @@ assert.match(html, /<svg[\s>]/i, "Missing house SVG");
 assert.match(html, /id="doorbell-button"/, "Missing doorbell control");
 assert.match(html, /id="sound-toggle"/, "Missing sound control");
 assert.match(html, /id="reset-button"/, "Missing reset control");
+assert.match(html, /href="\.\.\/TinyChaos\/"/, "Missing TinyChaos gallery navigation");
 assert.match(html, /role="status"/, "Missing live status region");
 assert.match(html, /href="favicon\.svg"/, "Missing favicon link");
 assert.match(css, /@media \(prefers-reduced-motion: reduce\)/, "Missing reduced-motion styles");
@@ -58,7 +59,7 @@ assert.equal(ids.length, new Set(ids).size, "Duplicate HTML or SVG id found");
 
 const localResources = [...html.matchAll(/\b(?:href|src)="([^"]+)"/g)]
   .map((match) => match[1])
-  .filter((resource) => !resource.startsWith("#"));
+  .filter((resource) => !resource.startsWith("#") && resource !== "../TinyChaos/");
 
 for (const resource of localResources) {
   assert.ok(fs.existsSync(path.join(projectRoot, resource)), `Broken local resource: ${resource}`);

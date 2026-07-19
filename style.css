@@ -1,18 +1,23 @@
 :root {
-  --ink: #17243a;
-  --night: #172a46;
-  --night-soft: #536b86;
-  --paper: #fff8e8;
-  --cream: #f5d9a3;
-  --wall: #e3b574;
-  --teal: #1f6d69;
+  --ink: #15152a;
+  --paper: #fff5df;
+  --coral: #ff5d5d;
+  --blue: #4f7cff;
+  --butter: #ffd166;
+  --mint: #58d6a9;
+  --lilac: #b695ff;
+  --night: var(--ink);
+  --night-soft: #24233f;
+  --cream: var(--butter);
+  --wall: var(--butter);
+  --teal: var(--mint);
   --teal-dark: #124c4b;
-  --cherry: #cf4655;
+  --cherry: var(--coral);
   --cherry-dark: #8f2f40;
-  --amber: #ffd56a;
-  --muted: #647086;
-  --display: "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
-  --body: "Trebuchet MS", "Avenir Next", Avenir, sans-serif;
+  --amber: var(--butter);
+  --muted: #6e695f;
+  --display: Impact, Haettenschweiler, "Arial Narrow Bold", "Franklin Gothic Condensed", sans-serif;
+  --body: Inter, ui-rounded, "SF Pro Rounded", "Segoe UI", sans-serif;
   --utility: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   color-scheme: dark;
   font-family: var(--body);
@@ -25,20 +30,21 @@
 }
 
 html {
-  min-width: 320px;
+  min-width: 0;
   min-height: 100%;
   background: var(--night);
 }
 
 body {
-  min-width: 320px;
+  min-width: 0;
   min-height: 100vh;
   margin: 0;
+  overflow-x: clip;
   color: var(--paper);
   background:
     radial-gradient(circle at 15% 14%, rgba(255, 213, 106, 0.1) 0 2px, transparent 3px),
     radial-gradient(circle at 79% 9%, rgba(255, 255, 255, 0.12) 0 1px, transparent 2px),
-    linear-gradient(155deg, #101b30 0%, #1d3557 54%, #253d5d 100%);
+    linear-gradient(155deg, var(--ink) 0%, var(--night-soft) 54%, var(--blue) 100%);
   background-size: 140px 140px, 105px 105px, auto;
 }
 
@@ -123,7 +129,7 @@ h1 span {
   background: var(--paper);
   border: 3px solid var(--ink);
   border-radius: 0.75rem 0.75rem 0.75rem 0.2rem;
-  box-shadow: 5px 6px 0 rgba(8, 18, 31, 0.42);
+  box-shadow: 5px 5px 0 var(--ink);
   transform: rotate(1.5deg);
 }
 
@@ -161,9 +167,9 @@ h1 span {
   overflow: hidden;
   color: var(--ink);
   background: var(--paper);
-  border: 4px solid #0e1d32;
+  border: 4px solid var(--ink);
   border-radius: clamp(1rem, 2.5vw, 1.8rem);
-  box-shadow: 0 22px 60px rgba(6, 13, 24, 0.45), 7px 8px 0 #0e1d32;
+  box-shadow: 8px 8px 0 var(--ink);
 }
 
 .scene-toolbar {
@@ -247,9 +253,8 @@ h1 span {
 
 .control-button:focus-visible,
 .doorbell-button:focus-visible {
-  outline: 4px solid #fff;
-  outline-offset: 3px;
-  box-shadow: 0 0 0 7px var(--cherry);
+  outline: 4px solid var(--blue);
+  outline-offset: 4px;
 }
 
 .house-stage {
@@ -852,6 +857,19 @@ h1 span {
 
 .site-footer p {
   margin: 0;
+}
+
+.collection-link {
+  color: var(--paper);
+  font-family: var(--display);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-underline-offset: 3px;
+}
+
+.collection-link:focus-visible {
+  outline: 4px solid var(--blue);
+  outline-offset: 4px;
 }
 
 .visually-hidden {
