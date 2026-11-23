@@ -213,9 +213,9 @@ All asset paths are relative, so the site works from a GitHub project-page subdi
 
 ## License and ownership
 
-Copyright © 2026 Sudarshan Chaudhari / SudarshanTechLabs. All rights reserved.
+Copyright © 2026 Sudarshan Chaudhari / SudarshanTechLabs.
 
-This repository does not currently include an open-source license. Source availability does not grant permission to copy, modify, distribute, or reuse the project unless the author provides written permission or adds a license later.
+Released under the MIT License — see [LICENSE](LICENSE) for the full text.
 
 ---
 
