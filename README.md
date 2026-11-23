@@ -25,13 +25,13 @@ The complete experience runs in the browser using semantic HTML, CSS, inline SVG
 ## Project status
 
 - **Application:** Production-ready
-- **Repository:** Private
+- **Repository:** Public
 - **Default branch:** `main`
-- **Deployment:** GitHub Pages compatible but intentionally not enabled
+- **Deployment:** Live on GitHub Pages at <https://sudarshanchaudhari.github.io/ShyDoorbell/>
 - **Build step:** None
 - **Primary quality gate:** `node scripts/verify.mjs`
 
-Publishing the repository or enabling GitHub Pages is a separate release decision.
+The repository is published and GitHub Pages serves it from `main` at the root.
 
 ## Experience
 
@@ -109,7 +109,7 @@ git clone https://github.com/SUDARSHANCHAUDHARI/ShyDoorbell.git
 cd ShyDoorbell
 ```
 
-Because the repository is private, cloning requires access through an authenticated GitHub account.
+The repository is public, so cloning requires no authentication.
 
 You can open `index.html` directly or serve the directory locally:
 
@@ -191,7 +191,7 @@ ShyDoorbell/
 
 ## Deploy to GitHub Pages
 
-The project is ready to deploy directly from the repository root. No compiled output or workflow is required.
+GitHub Pages is already enabled and serves this project from the repository root at <https://sudarshanchaudhari.github.io/ShyDoorbell/>. No compiled output or workflow is required. The steps below record how it was set up, for reference and for restoring the setting:
 
 1. Complete a manual visual review.
 2. Confirm the intended repository and site visibility.
@@ -200,7 +200,7 @@ The project is ready to deploy directly from the repository root. No compiled ou
 5. Select `main` and the `/ (root)` folder, then save.
 6. Verify keyboard controls, audio, storage, and phone/desktop layouts on the published URL.
 
-All asset paths are relative, so the site works from a GitHub project-page subdirectory. GitHub Pages is currently disabled, and no GitHub Actions workflow is configured.
+All asset paths are relative, so the site works from a GitHub project-page subdirectory. No GitHub Actions workflow is configured; Pages deploys from the branch directly.
 
 ## Release checklist
 
@@ -208,8 +208,8 @@ All asset paths are relative, so the site works from a GitHub project-page subdi
 2. Run `node scripts/verify.mjs`.
 3. Run the secret and high-risk-file checks required by repository policy.
 4. Manually review keyboard controls, sound, motion preferences, contrast, and responsive layouts.
-5. Confirm repository visibility before publishing.
-6. Enable GitHub Pages only after release approval.
+5. Confirm the repository is still public and Pages still serves `main` at the root.
+6. Verify the published URL once the change reaches `main`.
 
 ## License and ownership
 
